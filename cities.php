@@ -59,13 +59,14 @@
       <tr>
         <td><?=$row['ID']?></td>
         <td><?=$row['Name']?></td>
-        <td><?=$row['CountryCode']?></td>
+        <td><a href="country.php?code=<?=$row['CountryCode']?>"><?=$row['CountryCode']?></a></td>
         <td><?=$row['District']?></td>
         <td><?=$row['Population']?></td>
       </tr>
     <?php
         $row = $cities->fetch_array();
       }
+      $cities->close();
     ?>
     </tbody>
   </table>
