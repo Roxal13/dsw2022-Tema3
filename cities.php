@@ -46,7 +46,11 @@
     </thead>
     <tbody>
     <?php
-      $sql = "SELECT * FROM city LIMIT 10";
+    $limit = "";
+    if (isset($_GET['n'])) {
+      $limit = " LIMIT " . $_GET['n'];
+    }
+      $sql = "SELECT * FROM city" . $limit;
       $cities = $link->query($sql);
 
       $row = $cities->fetch_array();
