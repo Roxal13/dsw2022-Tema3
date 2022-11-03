@@ -56,7 +56,7 @@
       <tr>
         <td><?=$row['ID']?></td>
         <td><?=$row['Name']?></td>
-        <td><?=$row['CountryCode']?></td>
+        <td><?=$row['CountryCode']?></td> 
         <td><?=$row['District']?></td>
         <td><?=$row['Population']?></td>
       </tr>
