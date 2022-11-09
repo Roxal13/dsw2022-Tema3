@@ -22,15 +22,44 @@
       $cod = $_POST["code"];
       $newCod = $_POST["newCode"];
       
-      $sql1 = "SELECT DISTINCT(*) FROM country WHERE Code='$cod'";
-      $result = $link->query($sql1);
+      $sql = "SELECT * FROM country WHERE Code='$cod'";
+      $result = $link->query($sql);
       $select = $result->fetch_array();
       if(strlen($newCod) == 3){
-        $sql2 = "INSERT INTO country VALUES('$newCod', '" . $select['Name'] . "', '" . $select['Continent'] . "', '" . $select['Region'] . "', " . $select['SurfaceArea'] . ", " . $select('IndepYear') . ", " . $select['Population'] . ", " . $select['LifeExpectancy'] . ", " . $select['GNP'] . ", " . $select['GNPOId'] . ", '" . $select['LocalName'] . "', '" . $select['GovernmentForm'] . "', '" . $select['HeadOfState'] . "', " . $select['Capital'] . ", " .  $select['Code2'] . ")";
-        if(mysqli_commit($link)){
-          echo "<p>Las tabla se ha añadido correctamente</p>";
+        $name = $select["Name"];
+        $continent = $select["Continent"];
+        $region = $select["Region"];
+        $surfArea = $select["SurfaceArea"];
+        if($select["IndepYear"] === null ){
+          $year = "null";
         }else{
-          echo "<p>Error en la consulta</p>";
+          $year = $select["IndepYear"];
+        }
+        $population = $select["Population"];
+        if($select["LifeExpectancy"] === null ){
+          $lifeExpec = "null";
+        }else{
+          $lifeExpec = $select["LifeExpectancy"];
+        }
+        $gnp = $select["GNP"];
+        if($select["GNPOld"] === null ){
+          $gnpoLd = "null" ;
+        }else{
+          $gnpoLd = $select["GNPOld"] ;
+        }
+        $localName = $select["LocalName"];
+        $government = $select["GovernmentForm"];
+        $headOfState = $select["HeadOfState"];
+        $capital = $select["Capital"];
+        $code2 = $select["Code2"];
+        $insert = "INSERT INTO country VALUES('$newCod', '$name', '$continent', '$region', $surfArea, $year, $population, $lifeExpec, $gnp, 
+          $gnpoLd, '$localName', '$government', '$headOfState', $capital, '$code2')";
+        if($link->query($insert)){
+          echo "<p>Las tabla se ha añadido correctamente</p>";
+          $link->commit();
+        }else{
+          echo "<p>El error número: $error</p>";
+          echo "<p>El error dice: $link->connect_error </p>";
           exit();
         }
       }else{
@@ -44,7 +73,7 @@
     <label for="code">Code</label>
     <select name="code" id="code">
   <?php
-      $sql = "SELECT DISTINCT(country.Code) FROM city JOIN country ON city.CountryCode = country.Code";
+      $sql = "SELECT DISTINCT(country.Code) FROM country";
       $result = $link->query($sql);
       $select = $result->fetch_array();
       while($select != null){
