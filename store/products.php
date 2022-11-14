@@ -1,4 +1,6 @@
 <?php include("includes/header.php"); ?>
+<?php include("includes/connection.php"); ?>
+<?php include("includes/menu.php"); ?>
     <table>
         <thead>
             <tr>
@@ -11,7 +13,6 @@
         </thead>
         <tbody> 
             <?php
-                include("includes/conexion.php");
                 $sql = "SELECT * FROM products LIMIT 20";
                 $result = $link->query($sql);
                 
@@ -27,5 +28,5 @@
             ?>
         </tbody>
     </table>
-</body>
-</html>
+<?php include("includes/disconnect.php"); ?>
+<?php include("includes/footer.php"); ?>
